@@ -11,6 +11,7 @@
 |
 */
 
-Route::prefix('user')->group(function() {
-    Route::get('/', 'UserController@index');
-});
+
+Route::post('/login', 'LoginController@login');
+Route::resource('user', 'UserController');
+Route::resource('student', 'StudentController');

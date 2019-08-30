@@ -5,6 +5,7 @@ namespace Modules\User\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\User\Entities\User;
 
 class UserController extends Controller
 {
@@ -14,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user::index');
+        return User::paginate(25);
     }
 
     /**
@@ -33,7 +34,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return User::create($request->except(["role"]))->addRole($request->role);
     }
 
     /**
@@ -43,19 +44,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('user::show');
+        return User::find($id);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('user::edit');
-    }
-
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -64,7 +54,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return User::find($id)->update($request->all());
     }
 
     /**
@@ -74,6 +64,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return User::find($id)->delete();
     }
 }
