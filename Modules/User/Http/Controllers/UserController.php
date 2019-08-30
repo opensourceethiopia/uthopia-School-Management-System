@@ -34,6 +34,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            "first_name" => 'required',
+            "father_name" => 'required',
+            "grand_father_name" => 'required',
+            "gender" => 'required',
+            "dob" => 'required',
+            "email" => 'required|unique:users',
+            "phone" => 'required'
+        ]);
+
         return User::create($request->except(["role"]))->addRole($request->role);
     }
 
@@ -54,6 +64,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            "first_name" => 'required',
+            "father_name" => 'required',
+            "grand_father_name" => 'required',
+            "gender" => 'required',
+            "dob" => 'required',
+            "email" => 'required|unique:users',
+            "phone" => 'required'
+        ]);
         return User::find($id)->update($request->all());
     }
 
